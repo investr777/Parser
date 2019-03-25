@@ -15,7 +15,7 @@ Vue.component('link-form', {
     methods: {
         analyze: function() {
             this.links.splice(0);
-            var url = {url: this.text};
+            var url = {url: document.querySelector('#edit').value};
             linkApi.save({}, url).then(result =>
                 result.json().then(data => {
                 data.forEach(link => this.links.push(link))
@@ -68,7 +68,7 @@ Vue.component('links-list', {
 
 var app = new Vue({
     el: '#app',
-    template: '<div><edit/><link-form :links="links" />' +
+    template: '<div><link-form :links="links" />' +
               '<links-list :links="links"/>' +
                '<links-clear :links="links"/>' +
                 '</div>',
