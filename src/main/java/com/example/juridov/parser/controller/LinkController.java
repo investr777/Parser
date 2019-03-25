@@ -27,11 +27,6 @@ public class LinkController {
     public List<Link> links(@RequestBody Dto url) throws IOException {
         return linkService.parser(url.getUrl());
     }
-//    @ApiOperation(value = "Get links", response = Link.class)
-//    @RequestMapping(path = "/link", method = RequestMethod.GET)
-//    public List<Link> links(@RequestParam String url) throws IOException {
-//        return linkService.parser(url);
-//    }
 
     @ApiOperation(value = "Clear links", response = Link.class)
     @RequestMapping(path = "/link/clear", method = RequestMethod.GET)

@@ -41,15 +41,29 @@ Vue.component('links-clear', {
 
 Vue.component('link-row', {
     props: ['link'],
-    template: '<div><i>{{ link.id }}</i> {{ link.name }} <a :href="link.url">{{ link.url }}</a></div>'
+    template: '<tr>' +
+                    '<td>{{link.id}}</td>' +
+                    '<td>{{link.name}}</td>' +
+                    '<td>{{link.url}}</td>' +
+              '</tr>'
 });
 
 Vue.component('links-list', {
     props: ['links'],
-    template:
-        '<div>' +
-        '<link-row v-for="link in links" :key="link.id" :link="link"/>' +
-        '</div>'
+    template: '<table>' +
+                    '<thead>' +
+                        '<th colspan="3">Found links</th>' +
+                    '</thead>' +
+                    '<thead>' +
+                        '<th>ID</th>' +
+                        '<th>Name</th>' +
+                        '<th>URL</th>' +
+                    '</thead>' +
+                    '<tbody>' +
+                        '<tr is="link-row" v-for="link in links" :key="link.id" :link="link"></tr>' +
+                    '</tbody>' +
+              '</table>'
+
 })
 
 var app = new Vue({
