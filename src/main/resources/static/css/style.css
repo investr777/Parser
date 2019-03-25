@@ -7,3 +7,9 @@ th, th, tr, td {
   padding: 3px;
   border: 1px solid black;
 }
+
+.center {
+  width: 200px;
+  padding: 10px;
+  margin: auto;
+}

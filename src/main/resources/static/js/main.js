@@ -9,7 +9,7 @@ Vue.component('link-form', {
     },
     template:
         '<div>' +
-        '<input type="text" placeholder="Write a link" v-model="text"/>' +
+        '<input id="edit" type="text" placeholder="Write a link" v-model="text"/>' +
         '<input type="button" value="Analyze" @click="analyze"/>' +
         '</div>',
     methods: {
@@ -29,7 +29,7 @@ Vue.component('link-form', {
 Vue.component('links-clear', {
     props: ['links'],
     template:
-        '<div>' +
+        '<div class="center">' +
         '<input type="button" value="Clear" @click="clear"/>' +
         '</div>',
     methods: {
@@ -44,7 +44,7 @@ Vue.component('link-row', {
     template: '<tr>' +
                     '<td>{{link.id}}</td>' +
                     '<td>{{link.name}}</td>' +
-                    '<td>{{link.url}}</td>' +
+                    '<td onclick="document.querySelector(\'#edit\').value = this.textContent" style="cursor: pointer">{{link.url}}</td>' +
               '</tr>'
 });
 
@@ -68,11 +68,11 @@ Vue.component('links-list', {
 
 var app = new Vue({
     el: '#app',
-    template: '<div><link-form :links="links" />' +
+    template: '<div><edit/><link-form :links="links" />' +
               '<links-list :links="links"/>' +
                '<links-clear :links="links"/>' +
                 '</div>',
     data: {
-        links: []
+        links: [],
     }
 });
