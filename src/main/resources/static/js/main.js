@@ -2,7 +2,7 @@ var linkApi = Vue.resource('/link')
 
 Vue.component('link-form', {
     props: ['links'],
-    data: function() {
+    data: function () {
         return {
             text: '',
             preloaderVisibility: false
@@ -10,13 +10,14 @@ Vue.component('link-form', {
     },
     template:
         '<div>' +
-        '<div><h3>Analyzing page</h3></div>' +
-        '<div><input id="edit"style="width: 100%" type="text" placeholder="Write a link" v-model="text"/></div>' +
-        '<div class="center"><button style="width:200px;" title="Analyze" @click="analyze">Analyze</button></div>' +
+        '<div><h3>Анализируемая страница</h3></div>' +
+        '<div><input id="edit"style="width: 100%" type="text" placeholder="Введите ссылку" v-model="text"/></div>' +
+        '<div class="center"><button style="width:200px;" title="Analyze" @click="analyze">Анализировать</button></div>' +
         '<div v-if="preloaderVisibility" id="image" class="center"><img style="width:200px;" src="/img/wait.gif"></div>' +
         '</div>',
     methods: {
-        analyze: function() {
+        analyze: function () {
+            var _this = this;
             var url = {url: document.querySelector('#edit').value};
             var temp = "https?:\/\/[a-z0-9\-\.]+\.[a-z]{2,9}";
             var regex = new RegExp(temp);
@@ -26,12 +27,14 @@ Vue.component('link-form', {
             }
             this.links.splice(0);
             this.preloaderVisibility = true;
-            linkApi.save({}, url).then(result =>
-                result.json().then(data => {
-                data.forEach(link => this.links.push(link))
-                    this.preloaderVisibility = false
-            })
-        )
+            linkApi.save({}, url).then(function (result) {
+                return result.json().then(function (data) {
+                    data.forEach(function (link) {
+                        return _this.links.push(link);
+                    });
+                    _this.preloaderVisibility = false;
+                });
+            });
          this.text = '';
         }
     }
@@ -41,7 +44,7 @@ Vue.component('links-clear', {
     props: ['links'],
     template:
         '<div class="center">' +
-        '<input type="button" style="width:200px;" value="Clear" @click="clear"/>' +
+        '<input type="button" style="width:200px;" value="Очистить" @click="clear"/>' +
         '</div>',
     methods: {
         clear: function () {
@@ -63,12 +66,12 @@ Vue.component('links-list', {
     props: ['links'],
     template: '<table>' +
                     '<thead>' +
-                        '<th colspan="3">Found links</th>' +
+                        '<th colspan="3">Обнаруженные ссылки</th>' +
                     '</thead>' +
                     '<thead>' +
-                        '<th>ID</th>' +
-                        '<th>Name</th>' +
-                        '<th>URL</th>' +
+                        '<th>№ п/п</th>' +
+                        '<th>Имя ссылки</th>' +
+                        '<th>Адрес ссылки</th>' +
                     '</thead>' +
                     '<tbody>' +
                         '<tr is="link-row" v-for="link in links" :key="link.id" :link="link"></tr>' +
