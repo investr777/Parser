@@ -27,10 +27,5 @@ public class LinkService {
             fullLinks.add(new Link(fullLinks.size() + 1, absLink, nameLink));
         }
         return fullLinks;
-    }
-
-    public List<Link> clearAll() {
-        fullLinks.clear();
-        return fullLinks;
-    }
+    }  
 }
