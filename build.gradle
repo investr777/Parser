@@ -3,20 +3,50 @@ plugins {
     id 'java'
 }
 
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'application'
 
 group = 'com.example.juridov'
 version = '1.0'
-sourceCompatibility = '11'
+sourceCompatibility = '1.8'
+
+mainClassName = "com.example.juridov.parser.ParserApplication"
+
+task runApp(type: JavaExec) {
+    main = "-jar";
+    args "build/libs/runApp-1.0.jar"
+}
+
+bootJar {
+    enabled=true
+    baseName = 'runApp'
+
+    exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.MF'
+
+    from {
+        configurations.compile.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+        configurations.runtime.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+}
+
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    runtime 'org.springframework.boot:spring-boot-devtools'
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.1.3.RELEASE'
+    runtimeOnly 'org.springframework.boot:spring-boot-devtools:2.1.3.RELEASE'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.1.3.RELEASE'
+    implementation 'joda-time:joda-time:2.10.1'
     implementation 'org.jsoup:jsoup:1.11.3'
     implementation 'io.springfox:springfox-swagger2:2.9.2'
     implementation 'io.springfox:springfox-swagger-ui:2.9.2'
