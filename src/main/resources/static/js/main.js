@@ -29,6 +29,7 @@ Vue.component('link-form', {
             linkApi.save({}, url).then(result =>
                 result.json().then(data => {
                 data.forEach(link => this.links.push(link))
+                    this.preloaderVisibility = false
             })
         )
          this.text = '';
